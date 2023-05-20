@@ -20,9 +20,18 @@ class homecontroller extends Controller
     public function home($request=null){
         // $name="<u>happy</u>";
         $email="happy@gmail.com";
-        $login=$request??"guest";
+        // $login=$request??"guest";
         $name=$request;
+        $login=true;
         $data=compact('name','email','login');
         return view('homepage')->with($data);
     }
+
+    public function fetcharray(){
+        $color=[];
+        $login=['abc'=>12344,'xyz'=>232323,'pqr'=>232323];
+        $data=compact('color','login');
+        return view('homepage')->with($data);
+    }
+
 }

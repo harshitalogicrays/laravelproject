@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\homecontroller;
 use App\Http\Controllers\singleaction;
 use App\Http\Controllers\PhotoController;
-
+use App\Http\Controllers\signupcontroller;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -75,10 +75,14 @@ use App\Http\Controllers\PhotoController;
 // });
 
 
+
 Route::get('/',[homecontroller::class,'index']);
 
 Route::get('/about',[homecontroller::class,'about']);
 Route::get('/home/{uname?}',[homecontroller::class,'home']);
+Route::get('/fetch',[homecontroller::class,'fetcharray']);
+Route::get('/form',[signupcontroller::class,'index']);
+Route::post('/form',[signupcontroller::class,'register']);
 
 Route::get('/single',singleaction::class);
 
