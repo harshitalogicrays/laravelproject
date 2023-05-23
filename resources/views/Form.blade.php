@@ -4,11 +4,10 @@
     <h1>Register</h1>
     <hr>
     <form method='post' action="{{url('/')}}/form" novalidate>
-        @csrf
-        {{-- @php
-            print_r($errors->all());
-        @endphp --}}
-     
+        @csrf     
+            {{-- @if($errors->all())
+                {{$errors}}
+            @endif   --}}
         <div class="mb-3">
             <label for="" class="form-label">username</label>
             <input type="text" class="form-control" name="uname" placeholder="enter name" value="{{old('uname')}}">
