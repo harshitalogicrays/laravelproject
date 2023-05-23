@@ -5,6 +5,7 @@ use App\Http\Controllers\homecontroller;
 use App\Http\Controllers\singleaction;
 use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\signupcontroller;
+use App\Http\Controllers\productcontroller;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -83,6 +84,7 @@ Route::get('/home/{uname?}',[homecontroller::class,'home']);
 Route::get('/fetch',[homecontroller::class,'fetcharray']);
 Route::get('/form',[signupcontroller::class,'index']);
 Route::post('/form',[signupcontroller::class,'register']);
+Route::get('/products',[productcontroller::class,'index']);
 
 Route::get('/single',singleaction::class);
 
