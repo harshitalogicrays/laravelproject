@@ -44,4 +44,10 @@
 </div>
 <button type="submit" class="btn btn-primary">Register</button>
 </form>
+
+@isset($data)
+    @foreach ($data as $d )
+       <h2> {{$d}}</h2>
+    @endforeach
+@endisset
 @endsection

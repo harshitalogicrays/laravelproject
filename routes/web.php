@@ -85,6 +85,7 @@ Route::get('/fetch',[homecontroller::class,'fetcharray']);
 Route::get('/form',[signupcontroller::class,'index']);
 Route::post('/form',[signupcontroller::class,'register']);
 Route::get('/products',[productcontroller::class,'index']);
+Route::get('/productAnonymous',[productcontroller::class,'anonymous']);
 
 Route::get('/single',singleaction::class);
 

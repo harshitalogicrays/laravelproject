@@ -10,13 +10,24 @@
     </div>
 </div>
 @endforeach --}}
-@php
+{{-- @php
     $demo=1;
-@endphp
-<x-displaycards title="product1" price=20000 :demo="$demo" class="text-danger" />
+@endphp --}}
+
+{{-- <x-displaycards title="product1" price=20000 :demo="$demo" class="text-danger" />
 <x-displaycards title="product2" price=30000/>
 <x-displaycards title="product3" price=40000/>
-<x-displaycards title="product4" price=50000/>
+<x-displaycards title="product4" price=50000/> --}}
+
+
+@foreach ($productdata as $product)
+@php
+    $name=$product['name'];
+    $price=$product['price'];
+    $image=$product['img'];
+@endphp
+       <x-displaycards :name="$name" :price="$price" :image="$image" />       
+@endforeach
 
 </div>
 @endsection

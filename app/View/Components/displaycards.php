@@ -11,16 +11,22 @@ class displaycards extends Component
      *
      * @return void
      */
-    public $title;
-    public $price;
-    public $demo;
-    public function __construct($title=null,$price,$demo=0)
+    // public $title;
+    // public $price;
+    // public $demo;
+    // public function __construct($title=null,$price,$demo=0)
+    // {
+    //     $this->title=$title;$this->price=$price;
+    //     $this->demo=$demo;
+       
+    // }
+
+        public $name;public $price;public $image;
+    public function __construct($name,$price,$image)
     {
-        $this->title=$title;$this->price=$price;
-        $this->demo=$demo;
+        $this->name=$name; $this->price=$price;$this->image=$image;
        
     }
-
     /**
      * Get the view / contents that represent the component.
      *
