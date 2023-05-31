@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Rules\uppercase;
 class signupcontroller extends Controller
 {
     public function index(){
@@ -90,11 +90,19 @@ class signupcontroller extends Controller
         // print_r($request->old('password'));
 
 
-        // $request->validate([
-        //     'uname'=>'required',
-        //     'email'=>'required|email',
-        //     'pwd'=>'required',
-        //     'cpwd'=>'required | same:pwd'         
-        // ]);
+        $request->validate([
+            'uname'=>['required',new uppercase],
+            'email'=>'required|email',
+            'pwd'=>['required','max:12',function($attribute,$value,$fail){
+                // if($value=='1234567')
+                if(!preg_match("/(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[\@\#\$\%\^]).{8,12}/",$value))
+                    $fail("the :attribute cannot have $value");
+            }],
+            'cpwd'=>'required | same:pwd'         
+        ]);
+
+        $data=$request->except('_token');
+        $data1=compact('data');
+        return view('form')->with($data1);
     }
 }
