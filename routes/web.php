@@ -6,6 +6,8 @@ use App\Http\Controllers\singleaction;
 use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\signupcontroller;
 use App\Http\Controllers\productcontroller;
+use App\Models\Customer;
+use App\Http\Controllers\customer_controller;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -90,6 +92,15 @@ Route::get('/productAnonymous',[productcontroller::class,'anonymous']);
 Route::get('/single',singleaction::class);
 
 Route::resource('/photos',PhotoController::class);
+
+// Route::get('/customer',function(){
+//     $customers=Customer::all();
+//     echo "<pre>";
+//     print_r($customers);
+//     echo "</pre>";
+// });
+Route::get('/customer',[customer_controller::class,'index']);
+Route::post('/customer',[customer_controller::class,'store']);
 
 Route::fallback(function(){
     return "Page not found";
