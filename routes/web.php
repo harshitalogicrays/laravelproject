@@ -101,7 +101,12 @@ Route::resource('/photos',PhotoController::class);
 // });
 Route::get('/customer',[customer_controller::class,'index']);
 Route::post('/customer',[customer_controller::class,'store']);
+Route::get('/customer/view',[customer_controller::class,'view']);
+// Route::get('/customer/delete/{id}',[customer_controller::class,'delete']);
+Route::get('/customer/delete/{id}',[customer_controller::class,'delete'])->name('customer.delete');
 
+Route::get('/customer/edit/{id}',[customer_controller::class,'edit'])->name('customer.edit');
+Route::post('/customer/update/{id}',[customer_controller::class,'update']);
 Route::fallback(function(){
     return "Page not found";
 });
