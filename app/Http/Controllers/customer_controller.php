@@ -7,7 +7,11 @@ use App\Models\Customer;
 class customer_controller extends Controller
 {
     public function index(){
-        return view('customer');
+        $title="Add";
+        $url=url('/customer');
+        $customers=new Customer;
+        $data=compact('title','customers','url');
+        return view('customer')->with($data);
         
     }
     public function store(Request $request){
@@ -22,7 +26,53 @@ class customer_controller extends Controller
         $customers->address=$request['address'];  
         $customers->isActive=$request['isActive'];  
         if($customers->save()){
-            return view('homepage');
+            return redirect('/customer/view');
         }
     }
+        public function view(){
+            $customers=Customer::all();
+            $data=compact('customers');
+            return view('customer-view')->with($data);
+        }
+
+        public function delete($id){
+            // Customer::find($id)->delete();
+            // return redirect()->back();
+
+            $customers=Customer::find($id);
+            if(!is_null($customers)){
+                $customers->delete();
+                return redirect()->back();
+            }
+            else
+            {   $customers=Customer::all();
+                $data=compact('customers');
+              return view('customer-view')->with($data);
+            }
+         }
+
+         public function edit($id){
+            $customers=Customer::find($id);
+            if(!is_null($customers)){
+                $url=url('/customer/update/'.$id);
+                $title="Update";
+            $data=compact('customers','title','url');
+            return view('customer')->with($data);
+            }
+         }
+
+         public function update($id,Request $request){
+            $customers=Customer::find($id); 
+            $customers->name=$request['name'];
+            $customers->email=$request['email'];
+            $customers->mobile=$request['mobile'];
+            $customers->password=$request['password'];
+            $customers->gender=$request['gender'];
+            $customers->dob=$request['dob'];
+            $customers->address=$request['address'];  
+            $customers->isActive=$request['isActive'];  
+            if($customers->save()){
+                return redirect('/customer/view');
+            }
+         }
 }
