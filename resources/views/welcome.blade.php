@@ -22,6 +22,11 @@
     </head>
     <body>
         <h1>Laravel Project</h1>
+        @if (session()->has('email'))
+            welcome {{session()->get('email');}}
+            @else
+            welcome guest
+        @endif
         
     </body>
     {{-- <body class="antialiased">

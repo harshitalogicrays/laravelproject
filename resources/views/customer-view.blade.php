@@ -31,7 +31,7 @@
                         <td>{{$cust->email}}</td>
                         <td>{{$cust->mobile}}</td>
                         <td>{{$cust->gender==='M'?'Male':'Female'}}</td>
-                        <td>{{$cust->dob}}</td>
+                        <td>{{formattedDate($cust->dob)}}</td>
                         <td>{{$cust->address}}</td>
                         <td>
                             @if($cust->isActive==1)

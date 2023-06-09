@@ -107,6 +107,22 @@ Route::get('/customer/delete/{id}',[customer_controller::class,'delete'])->name(
 
 Route::get('/customer/edit/{id}',[customer_controller::class,'edit'])->name('customer.edit');
 Route::post('/customer/update/{id}',[customer_controller::class,'update']);
+
+Route::get('get-session',function(){
+    $session= session()->all();
+    printdata($session);
+    return session()->get('email');
+});
+
+Route::get('set-session',function(){
+    session()->put(['email'=>'ram@gmail.com','pwd'=>12345]);
+    return redirect('/get-session');
+});
+
+Route::get('delete-session',function(){
+    session()->forget('email');
+});
+
 Route::fallback(function(){
     return "Page not found";
 });

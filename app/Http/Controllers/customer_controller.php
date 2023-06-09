@@ -15,6 +15,7 @@ class customer_controller extends Controller
         
     }
     public function store(Request $request){
+        // printdata($request->all());
         $customers=new Customer; 
         // $customers is the instance of Customer Model Class
         $customers->name=$request['name'];
