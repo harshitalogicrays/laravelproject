@@ -30,9 +30,16 @@ class customer_controller extends Controller
             return redirect('/customer/view');
         }
     }
-        public function view(){
-            $customers=Customer::all();
-            $data=compact('customers');
+        public function view(Request $request){
+            $search=$request['search']??null;
+            if($search!=''){
+                $customers=Customer::where('name','LIKE',"%$search%")->orWhere('email','LIKE',"%$search%")->get();
+            }
+            else{
+                // $customers=Customer::all();
+                $customers=Customer::paginate(5);
+            }          
+            $data=compact('customers','search');
             return view('customer-view')->with($data);
         }
 
@@ -76,4 +83,27 @@ class customer_controller extends Controller
                 return redirect('/customer/view');
             }
          }
+
+public function trash(){
+    $customers=Customer::onlyTrashed()->get();
+    $data=compact('customers');
+  return view('customer-trash')->with($data);
+}
+
+public function restore($id){
+    $customers=Customer::withTrashed()->find($id);
+    if(!is_null($customers)){
+        $customers->restore();
+        return redirect('/customer/view');
+    }
+}
+
+public function forceDelete($id){
+    $customers=Customer::withTrashed()->find($id);
+    if(!is_null($customers)){
+        $customers->forceDelete();
+        return redirect('/customer/trash');
+    }
+}
+
 }
