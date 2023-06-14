@@ -61,10 +61,10 @@
     <h3>{{$c}}</h3>
 @endforeach --}}
 
-@foreach ($login as $k=>$v )
+{{-- @foreach ($login as $k=>$v )
         <h3>{{$k}} and {{$v}}</h3>
         {{$loop->count}}
-@endforeach
+@endforeach --}}
 
 {{-- @forelse ($color as $c )
         <h3>{{$c}}</h3>

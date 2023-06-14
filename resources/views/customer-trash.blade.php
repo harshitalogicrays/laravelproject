@@ -1,20 +1,10 @@
 @extends('layouts.main')
 @section('main-section')
 
-    <h1>Customers List </h1>
+    <h1>Customers Trash List </h1>
     <div class='row'>
-        <div class='col-6'>
-        <form action="{{url('/customer/view')}}">
-            <div>
-                <div class="mb-3 input-group">
-                    <input type="search" name="search" class="form-control" placeholder="name or email">
-                    <button type="submit" class="btn btn-primary">Search</button>
-                </div>
-            </div>
-        </form>
-    </div>
-    <div class='col-6'>
-     <a name="" id="" class="btn btn-danger float-end" href="{{route('customer.trash')}}" role="button">Go to Trash</a>
+        <div class='col-12'>
+     <a name="" id="" class="btn btn-success float-end" href="{{route('customer.view')}}" role="button">Go to View</a>
     </div>
     </div>
     <div class="table-responsive mt-5">
@@ -56,10 +46,13 @@
                             @endif
                         </td>
                         <td>
-                            <a href={{route('customer.edit',['id'=>$cust->customer_id])}} class="btn btn-success"><i class="bi bi-pencil-square"></i></a>
-                            {{-- <a href={{url('/customer/delete/'.$cust->customer_id)}} class="btn btn-danger"><i class="bi bi-trash"></i></a> --}}
-
-                            <a href={{route('customer.delete',['id'=>$cust->customer_id])}} class="btn btn-danger"><i class="bi bi-trash"></i></a>
+                            <a href="{{route('customer.restore',['id'=>$cust->customer_id])}}" class="btn btn-success">Restore</a>
+                          {{-- <a  href="{{route('customer.forceDelete',['id'=>$cust->customer_id])}}"> --}}
+                            <form action="{{route('customer.forceDelete',['id'=>$cust->customer_id])}}">
+                            <input name="" id="" class="btn btn-danger" type="submit" value="Delete" onclick="return confirm('are you sure to delete??')">    
+                            </form>
+                        
+                        {{-- </a> --}}
                         </td>
                     </tr>
                     @endforeach
@@ -67,9 +60,6 @@
                 </tbody>
                 
         </table>
-            @if($search==null)
-                 {{ $customers->links('pagination::bootstrap-5'); }}
-            @endif
     </div>
     
 @endsection

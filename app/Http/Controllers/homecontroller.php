@@ -9,8 +9,9 @@ class homecontroller extends Controller
     // http://127.0.0.1:8000/
     public function index(){
         // return "hello";  echo "hello";
-        return view('welcome');
+        // return view('welcome');
         //welcome.blade.php
+        return view('homepage');
     }
     // http://127.0.0.1:8000/about
     public function about(){

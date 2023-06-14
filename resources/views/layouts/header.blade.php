@@ -7,4 +7,5 @@
     @stack('title')
 </head>
 <body>
+    @include('navbar')
     

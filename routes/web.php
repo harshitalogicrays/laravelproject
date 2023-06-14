@@ -8,6 +8,7 @@ use App\Http\Controllers\signupcontroller;
 use App\Http\Controllers\productcontroller;
 use App\Models\Customer;
 use App\Http\Controllers\customer_controller;
+use App\Http\Controllers\fileupload;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -99,14 +100,32 @@ Route::resource('/photos',PhotoController::class);
 //     print_r($customers);
 //     echo "</pre>";
 // });
-Route::get('/customer',[customer_controller::class,'index']);
-Route::post('/customer',[customer_controller::class,'store']);
-Route::get('/customer/view',[customer_controller::class,'view']);
-// Route::get('/customer/delete/{id}',[customer_controller::class,'delete']);
-Route::get('/customer/delete/{id}',[customer_controller::class,'delete'])->name('customer.delete');
+// Route::get('/customer',[customer_controller::class,'index']);
+// Route::post('/customer',[customer_controller::class,'store']);
+// Route::get('/customer/view',[customer_controller::class,'view'])->name('customer.view');
+// // Route::get('/customer/delete/{id}',[customer_controller::class,'delete']);
+// Route::get('/customer/delete/{id}',[customer_controller::class,'delete'])->name('customer.delete');
+// Route::get('/customer/edit/{id}',[customer_controller::class,'edit'])->name('customer.edit');
+// Route::post('/customer/update/{id}',[customer_controller::class,'update']);
+// Route::get('/customer/trash/',[customer_controller::class,'trash'])->name('customer.trash');
+// Route::get('/customer/restore/{id}',[customer_controller::class,'restore'])->name('customer.restore');
+// Route::get('/customer/forceDelete/{id}',[customer_controller::class,'forceDelete'])->name('customer.forceDelete');
 
-Route::get('/customer/edit/{id}',[customer_controller::class,'edit'])->name('customer.edit');
-Route::post('/customer/update/{id}',[customer_controller::class,'update']);
+Route::group(['prefix'=>'/customer'],function(){
+    Route::get('/',[customer_controller::class,'index']);
+    Route::post('/',[customer_controller::class,'store']);
+    Route::get('/view',[customer_controller::class,'view'])->name('customer.view');
+    // Route::get('/customer/delete/{id}',[customer_controller::class,'delete']);
+    Route::get('/delete/{id}',[customer_controller::class,'delete'])->name('customer.delete');
+    Route::get('/edit/{id}',[customer_controller::class,'edit'])->name('customer.edit');
+    Route::post('/update/{id}',[customer_controller::class,'update']);
+    Route::get('/trash',[customer_controller::class,'trash'])->name('customer.trash');
+    Route::get('/restore/{id}',[customer_controller::class,'restore'])->name('customer.restore');
+    Route::get('/forceDelete/{id}',[customer_controller::class,'forceDelete'])->name('customer.forceDelete');
+});
+
+
+
 
 Route::get('get-session',function(){
     $session= session()->all();
@@ -116,13 +135,17 @@ Route::get('get-session',function(){
 
 Route::get('set-session',function(){
     session()->put(['email'=>'ram@gmail.com','pwd'=>12345]);
+    session()->flash('status','active');
     return redirect('/get-session');
 });
 
 Route::get('delete-session',function(){
     session()->forget('email');
+    session()->flush();
 });
 
+Route::get('/fileupload',[fileupload::class,'imageupload']);
+Route::post('/fileupload',[fileupload::class,'imgstore'])->name('image.store');
 Route::fallback(function(){
     return "Page not found";
 });
