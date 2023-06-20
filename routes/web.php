@@ -112,19 +112,18 @@ Route::resource('/photos',PhotoController::class);
 // Route::get('/customer/forceDelete/{id}',[customer_controller::class,'forceDelete'])->name('customer.forceDelete');
 
 Route::group(['prefix'=>'/customer'],function(){
-    Route::get('/',[customer_controller::class,'index']);
+    Route::get('/',[customer_controller::class,'index'])->middleware('routem');
     Route::post('/',[customer_controller::class,'store']);
     Route::get('/view',[customer_controller::class,'view'])->name('customer.view');
     // Route::get('/customer/delete/{id}',[customer_controller::class,'delete']);
     Route::get('/delete/{id}',[customer_controller::class,'delete'])->name('customer.delete');
-    Route::get('/edit/{id}',[customer_controller::class,'edit'])->name('customer.edit');
+    Route::get('/edit/{id}',[customer_controller::class,'edit'])->name('customer.edit')->middleware('routem');
     Route::post('/update/{id}',[customer_controller::class,'update']);
     Route::get('/trash',[customer_controller::class,'trash'])->name('customer.trash');
     Route::get('/restore/{id}',[customer_controller::class,'restore'])->name('customer.restore');
     Route::get('/forceDelete/{id}',[customer_controller::class,'forceDelete'])->name('customer.forceDelete');
+    
 });
-
-
 
 
 Route::get('get-session',function(){
@@ -135,17 +134,40 @@ Route::get('get-session',function(){
 
 Route::get('set-session',function(){
     session()->put(['email'=>'ram@gmail.com','pwd'=>12345]);
+    session()->put(['user'=>'ram']);
     session()->flash('status','active');
     return redirect('/get-session');
 });
 
 Route::get('delete-session',function(){
-    session()->forget('email');
+    // session()->forget('email');
+    session()->forget('user');
     session()->flush();
 });
 
-Route::get('/fileupload',[fileupload::class,'imageupload']);
-Route::post('/fileupload',[fileupload::class,'imgstore'])->name('image.store');
+// Route::get('/fileupload',[fileupload::class,'imageupload'])->middleware('groupm');
+// Route::post('/fileupload',[fileupload::class,'imgstore'])->name('image.store');
+
+// Route::middleware(['groupm'])->group(function () {
+//     Route::get('/fileupload',[fileupload::class,'imageupload']);
+//     Route::post('/fileupload',[fileupload::class,'imgstore'])->name('image.store');
+// });
+
+Route::group(['prefix'=>'/fileupload'],function(){
+    Route::controller(fileupload::class)->group(function(){ // controller route grouping
+            Route::get('/','imageupload');
+            Route::post('/','imgstore')->name('image.store');
+    });
+    // Route::get('/',[fileupload::class,'imageupload']);  
+    // Route::post('/',[fileupload::class,'imgstore'])->name('image.store');
+});
+
+Route::get('/no-access',function(){
+    return view('pagenotfound');
+   });
+
+
+
 Route::fallback(function(){
     return "Page not found";
 });
